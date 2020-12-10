@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'main.dart';
 
 import 'Userprofile.dart';
 
@@ -43,19 +44,18 @@ class SignupPage extends StatefulWidget {
         setState(() {
           visible = false;
         });
-      }
 
       // Showing Alert Dialog with Response JSON Message.
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text(datauser),
+            title: new Text("Successfully Inserted!!!!"),
             actions: <Widget>[
               FlatButton(
                 child: new Text("OK"),
                 onPressed: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => Userprofile())
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage())
                   );
 
                 },
@@ -64,6 +64,7 @@ class SignupPage extends StatefulWidget {
           );
         },
       );
+      }
 
 
   }

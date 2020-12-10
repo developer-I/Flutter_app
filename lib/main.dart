@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'signup.dart';
+import 'Userprofile.dart';
 
 void main() => runApp(new MyApp());
 
@@ -23,6 +27,63 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var visible = false ;
+  var responseJson;
+
+
+  TextEditingController _emaill = new TextEditingController();
+  TextEditingController _passl = new TextEditingController();
+
+  var Email;
+
+
+  senddata(var emaili ,var passi ) async {
+
+    setState(() {
+      visible = true ;
+    });
+
+    final response = await http.get("http://192.168.0.200/Vipin/AdminUser/index.php/Connector/App_insert_login_data?email=$emaili&pass=$passi");
+
+    setState(() {
+    responseJson = jsonDecode(response.body.toString());
+    Email= responseJson[0]['id'];
+    });
+
+    print(responseJson[2]['id']);
+
+
+    var datauser = json.decode(response.body);
+
+    // If Web call Success than Hide the CircularProgressIndicator.
+    if(response.statusCode == 200){
+      setState(() {
+        visible = false;
+      });
+
+      // Showing Alert Dialog with Response JSON Message.
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Successfully Inserted!!!!"),
+            actions: <Widget>[
+              FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  // Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage())
+                  // );
+
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -62,6 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     children: <Widget>[
                       TextField(
+                        controller:_emaill,
                         decoration: InputDecoration(
                             labelText: 'EMAIL',
                             labelStyle: TextStyle(
@@ -73,6 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       SizedBox(height: 20.0),
                       TextField(
+                        controller:_passl,
                         decoration: InputDecoration(
                             labelText: 'PASSWORD',
                             labelStyle: TextStyle(
@@ -100,26 +163,47 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       SizedBox(height: 40.0),
                       Container(
-                        height: 40.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.greenAccent,
-                          color: Colors.green,
-                          elevation: 7.0,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Center(
-                              child: Text(
-                                'LOGIN',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat'),
-                              ),
+                          height: 40.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.greenAccent,
+                            color: Colors.green,
+                            elevation: 7.0,
+                            child:RaisedButton(
+                              onPressed: (){
+
+                                //   final response = await http.post("http://192.168.0.200/Vipin/AdminUser/index.php/Connector/App_insert_data?");
+                                senddata(_emaill.text,_passl.text);
+                              },
+                              color: Colors.green,
+                              textColor: Colors.white,
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              child: Text('Click Here To Register User Online'),
                             ),
-                          ),
-                        ),
-                      ),
+                          )),
+                      // Container(
+                      //   height: 40.0,
+                      //   child: Material(
+                      //     borderRadius: BorderRadius.circular(20.0),
+                      //     shadowColor: Colors.greenAccent,
+                      //     color: Colors.green,
+                      //     elevation: 7.0,
+                      //     child: GestureDetector(
+                      //       onTap: () {
+                      //         senddata(_emaill.text,_passl.text);
+                      //       },
+                      //       child: Center(
+                      //         child: Text(
+                      //           'LOGIN',
+                      //           style: TextStyle(
+                      //               color: Colors.white,
+                      //               fontWeight: FontWeight.bold,
+                      //               fontFamily: 'Montserrat'),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(height: 20.0),
                       // Container(
                       //   height: 40.0,
