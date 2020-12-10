@@ -1,4 +1,4 @@
-import 'dart:async';
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -27,52 +27,86 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var visible = false ;
+  // var visible = false ;
   var responseJson;
 
 
   TextEditingController _emaill = new TextEditingController();
   TextEditingController _passl = new TextEditingController();
 
-  var Email;
+
 
 
   senddata(var emaili ,var passi ) async {
 
-    setState(() {
-      visible = true ;
-    });
+    // setState(() {
+    //   visible = true ;
+    // });
 
     final response = await http.get("http://192.168.0.200/Vipin/AdminUser/index.php/Connector/App_insert_login_data?email=$emaili&pass=$passi");
 
     setState(() {
     responseJson = jsonDecode(response.body.toString());
-    Email= responseJson[0]['id'];
+
     });
 
-    print(responseJson[2]['id']);
+    // print(responseJson['email']+" " + responseJson['pass']);
 
 
-    var datauser = json.decode(response.body);
 
-    // If Web call Success than Hide the CircularProgressIndicator.
-    if(response.statusCode == 200){
-      setState(() {
-        visible = false;
-      });
+    if(responseJson['status'] == 'true'){
 
-      // Showing Alert Dialog with Response JSON Message.
+       if(responseJson['designation'] == 'admin'){
+         showDialog(
+           context: context,
+           builder: (BuildContext context) {
+             return AlertDialog(
+               title: new Text(' Login !!!!! '),
+               actions: <Widget>[
+                 FlatButton(
+                   child: new Text("OK"),
+                   onPressed: () {
+                     Navigator.push(context,MaterialPageRoute(builder: (context) => UserProfilePage(responseJson)));
+
+                   },
+                 ),
+               ],
+             );
+           },
+         );
+       }
+       else if(responseJson['designation'] == 'employee'){
+         showDialog(
+           context: context,
+           builder: (BuildContext context) {
+             return AlertDialog(
+               title: new Text(' Login !!!!! '),
+               actions: <Widget>[
+                 FlatButton(
+                   child: new Text("OK"),
+                   onPressed: () {
+                     Navigator.push(context,MaterialPageRoute(builder: (context) => UserProfilePage(responseJson)));
+
+                   },
+                 ),
+               ],
+             );
+           },
+         );
+       }
+
+     }
+    else{
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("Successfully Inserted!!!!"),
+            title: new Text('Check your email or password & login again !!! '),
             actions: <Widget>[
               FlatButton(
                 child: new Text("OK"),
                 onPressed: () {
-                  // Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage())
-                  // );
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage()));
 
                 },
               ),

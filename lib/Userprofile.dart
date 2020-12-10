@@ -3,17 +3,23 @@ import 'package:flutter/material.dart';
 void main() => runApp(Userprofile());
 
 class Userprofile extends StatelessWidget {
+  var response ;
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      title: "User Profile",
+
+    title: "User Profile",
       debugShowCheckedModeBanner: false,
-      home: UserProfilePage(),
+      home: UserProfilePage(this.response),
     );
   }
 }
 
 class UserProfilePage extends StatelessWidget {
+  var response1 ;
+
+  UserProfilePage(this.response1);
   final String _fullName = "Nick Frost";
   final String _status = "Software Developer";
   final String _bio =
@@ -63,7 +69,7 @@ class UserProfilePage extends StatelessWidget {
     );
 
     return Text(
-      _fullName,
+      response1['firstname'],
       style: _nameTextStyle,
     );
   }
@@ -76,7 +82,7 @@ class UserProfilePage extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Text(
-        _status,
+         response1['designation'],
         style: TextStyle(
           fontFamily: 'Spectral',
           color: Colors.black,
