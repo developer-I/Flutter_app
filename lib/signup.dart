@@ -39,8 +39,10 @@ class SignupPage extends StatefulWidget {
 
      var datauser = json.encode(response.body);
 
+
+
       // If Web call Success than Hide the CircularProgressIndicator.
-      if(response.statusCode == 200){
+      if(datauser.isNotEmpty){
         setState(() {
           visible = false;
         });

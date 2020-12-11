@@ -1,32 +1,28 @@
-
-
 import 'package:flutter/material.dart';
 
 import 'main.dart';
+import 'Reports.dart';
 
-void main() => runApp(Userprofile());
+void main() => runApp(adminUserprofile());
 
-class Userprofile extends StatelessWidget {
+class adminUserprofile extends StatelessWidget {
   var response ;
-  BuildContext context;
 
   @override
   Widget build(BuildContext context) {
-    this.context = context;
-    return MaterialApp(
-      title: "User Profile",
 
+    return MaterialApp(
+
+      title: "User Profile",
       debugShowCheckedModeBanner: false,
-      home: UserProfilePage(this.response),
+      home: adminUserProfilePage(this.response),
     );
   }
 }
 
-class UserProfilePage extends StatelessWidget {
+class adminUserProfilePage extends StatelessWidget {
   var response1 ;
-
-  UserProfilePage(this.response1);
-
+  adminUserProfilePage(this.response1);
 
 
 
@@ -39,14 +35,12 @@ class UserProfilePage extends StatelessWidget {
   final String _posts = "24";
   final String _scores = "450";
 
-
-
   Widget _buildCoverImage(Size screenSize) {
     return Container(
       height: screenSize.height / 2.6,
       decoration: BoxDecoration(
         image: new  DecorationImage(
-           image: NetworkImage('https://images.pexels.com/photos/1742370/pexels-photo-1742370.jpeg?cs=srgb&dl=pexels-mikechie-esparagoza-1742370.jpg&fm=jpg'),
+          image: NetworkImage('https://images.pexels.com/photos/1742370/pexels-photo-1742370.jpeg?cs=srgb&dl=pexels-mikechie-esparagoza-1742370.jpg&fm=jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -54,16 +48,16 @@ class UserProfilePage extends StatelessWidget {
   }
 
   Widget _buildProfileImage() {
-    String profile = "https://images.pexels.com/photos/3182751/pexels-photo-3182751.jpeg?cs=srgb&dl=pexels-fauxels-3182751.jpg&fm=jpg";
+    String profile = "http://192.168.0.200/Vipin/AdminUser/profiles/${response1['profile']}";
     return Center(
       child: Container(
-         // child: Image.network('http://192.168.0.200/Vipin/AdminUser/profiles/.vipin.jpg')
+        // child: Image.network('http://192.168.0.200/Vipin/AdminUser/profiles/.vipin.jpg')
 
         width: 140.0,
         height: 140.0,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(profile),
+            image: NetworkImage("https://images.pexels.com/photos/3182751/pexels-photo-3182751.jpeg?cs=srgb&dl=pexels-fauxels-3182751.jpg&fm=jpg"),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(80.0),
@@ -101,7 +95,7 @@ class UserProfilePage extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Text(
-         response1['designation'],
+        response1['designation'],
         style: TextStyle(
           fontFamily: 'Spectral',
           color: Colors.black,
@@ -200,93 +194,91 @@ class UserProfilePage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    Widget _buildButtons() {
-      return Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  height: 40.0,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    color: Color(0xFF404A5C),
+  Widget _buildButtons() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyHomePage()));
+              },
+              child: Container(
+                height: 40.0,
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  color: Color(0xFF404A5C),
+                ),
+                child: Center(
+                  child: Text(
+                    "LOGOUT",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  child: Center(
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 10.0),
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => reports()));
+              },
+              child: Container(
+                height: 40.0,
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: Text(
-                      "LOGOUT",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      "REPORTS",
+                      style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
               ),
             ),
-            SizedBox(width: 10.0),
-            Expanded(
-              child: InkWell(
-                onTap: () => print("Message"),
-                child: Container(
-                  height: 40.0,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(
-                        "ATTENDANCE",
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-
-    @override
-    // Widget build(BuildContext context) {
-      Size screenSize = MediaQuery
-          .of(context)
-          .size;
-      return Scaffold(
-        body: Stack(
-          children: <Widget>[
-            _buildCoverImage(screenSize),
-            SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: screenSize.height / 6.4),
-                    _buildProfileImage(),
-                    _buildFullName(),
-                    _buildStatus(context),
-                    _buildStatContainer(),
-                    _buildBio(context),
-                    _buildSeparator(screenSize),
-                    SizedBox(height: 10.0),
-                    _buildGetInTouch(context),
-                    SizedBox(height: 8.0),
-                    _buildButtons(),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
+          ),
+        ],
+      ),
+    );
   }
-// }
+
+
+    Size screenSize = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          _buildCoverImage(screenSize),
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: screenSize.height / 6.4),
+                  _buildProfileImage(),
+                  _buildFullName(),
+                  _buildStatus(context),
+                  _buildStatContainer(),
+                  _buildBio(context),
+                  _buildSeparator(screenSize),
+                  SizedBox(height: 10.0),
+                  _buildGetInTouch(context),
+                  SizedBox(height: 8.0),
+                  _buildButtons(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

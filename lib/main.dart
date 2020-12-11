@@ -1,8 +1,7 @@
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'adminUserProfile.dart';
 import 'signup.dart';
 import 'Userprofile.dart';
 
@@ -66,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                  FlatButton(
                    child: new Text("OK"),
                    onPressed: () {
-                     Navigator.push(context,MaterialPageRoute(builder: (context) => UserProfilePage(responseJson)));
+                     Navigator.push(context,MaterialPageRoute(builder: (context) => adminUserProfilePage(responseJson)));
 
                    },
                  ),
