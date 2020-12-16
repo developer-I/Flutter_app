@@ -1,13 +1,17 @@
+import 'dart:convert';
 
-
+import 'package:http/http.dart' as http;
+import 'package:demonstration/Attendance.dart';
 import 'package:flutter/material.dart';
+import 'TimeINOUT.dart';
 
-import 'main.dart';
+import 'logout.dart';
+
 
 void main() => runApp(Userprofile());
 
 class Userprofile extends StatelessWidget {
-  var response ;
+  var response;
   BuildContext context;
 
   @override
@@ -15,7 +19,6 @@ class Userprofile extends StatelessWidget {
     this.context = context;
     return MaterialApp(
       title: "User Profile",
-
       debugShowCheckedModeBanner: false,
       home: UserProfilePage(this.response),
     );
@@ -23,13 +26,9 @@ class Userprofile extends StatelessWidget {
 }
 
 class UserProfilePage extends StatelessWidget {
-  var response1 ;
+  var response1;
 
   UserProfilePage(this.response1);
-
-
-
-
 
   final String _fullName = "Nick Frost";
   final String _status = "Software Developer";
@@ -39,14 +38,13 @@ class UserProfilePage extends StatelessWidget {
   final String _posts = "24";
   final String _scores = "450";
 
-
-
   Widget _buildCoverImage(Size screenSize) {
     return Container(
       height: screenSize.height / 2.6,
       decoration: BoxDecoration(
-        image: new  DecorationImage(
-           image: NetworkImage('https://images.pexels.com/photos/1742370/pexels-photo-1742370.jpeg?cs=srgb&dl=pexels-mikechie-esparagoza-1742370.jpg&fm=jpg'),
+        image: new DecorationImage(
+          image: NetworkImage(
+              'https://images.pexels.com/photos/1742370/pexels-photo-1742370.jpeg?cs=srgb&dl=pexels-mikechie-esparagoza-1742370.jpg&fm=jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -54,10 +52,11 @@ class UserProfilePage extends StatelessWidget {
   }
 
   Widget _buildProfileImage() {
-    String profile = "https://images.pexels.com/photos/3182751/pexels-photo-3182751.jpeg?cs=srgb&dl=pexels-fauxels-3182751.jpg&fm=jpg";
+    String profile =
+        "https://images.pexels.com/photos/3182751/pexels-photo-3182751.jpeg?cs=srgb&dl=pexels-fauxels-3182751.jpg&fm=jpg";
     return Center(
       child: Container(
-         // child: Image.network('http://192.168.0.200/Vipin/AdminUser/profiles/.vipin.jpg')
+        // child: Image.network('http://192.168.0.200/Vipin/AdminUser/profiles/.vipin.jpg')
 
         width: 140.0,
         height: 140.0,
@@ -72,13 +71,11 @@ class UserProfilePage extends StatelessWidget {
             width: 10.0,
           ),
         ),
-
       ),
     );
   }
 
   Widget _buildFullName() {
-
     TextStyle _nameTextStyle = TextStyle(
       fontFamily: 'Roboto',
       color: Colors.black,
@@ -87,8 +84,7 @@ class UserProfilePage extends StatelessWidget {
     );
 
     return Text(
-      response1['firstname']+" "+response1['lastname'],
-
+      response1['firstname'] + " " + response1['lastname'],
       style: _nameTextStyle,
     );
   }
@@ -101,7 +97,7 @@ class UserProfilePage extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Text(
-         response1['designation'],
+        response1['designation'],
         style: TextStyle(
           fontFamily: 'Spectral',
           color: Colors.black,
@@ -162,7 +158,7 @@ class UserProfilePage extends StatelessWidget {
   Widget _buildBio(BuildContext context) {
     TextStyle bioTextStyle = TextStyle(
       fontFamily: 'Spectral',
-      fontWeight: FontWeight.w400,//try changing weight to w500 if not thin
+      fontWeight: FontWeight.w400, //try changing weight to w500 if not thin
       fontStyle: FontStyle.italic,
       color: Color(0xFF799497),
       fontSize: 16.0,
@@ -198,6 +194,7 @@ class UserProfilePage extends StatelessWidget {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     Widget _buildButtons() {
@@ -209,7 +206,7 @@ class UserProfilePage extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                      MaterialPageRoute(builder: (context) => logout()));
                 },
                 child: Container(
                   height: 40.0,
@@ -232,7 +229,23 @@ class UserProfilePage extends StatelessWidget {
             SizedBox(width: 10.0),
             Expanded(
               child: InkWell(
-                onTap: () => print("Message"),
+                onTap: () async {
+                  var email = response1['email'];
+
+                  final response = await http.get(
+                      "http://192.168.0.200/Vipin/AdminUser/index.php/Connector/Phone_Check_TimeInOut?email=$email");
+//                     setState(() {
+//                       responseJson = jsonDecode(response.body.toString());
+// });
+                  var responseJson = jsonDecode(response.body.toString());
+                  var status = responseJson['status'];
+                  var currenttime = responseJson['currenttime'];
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TimeInOut(
+                              status, currenttime, email))); //Attendance(email)
+                },
                 child: Container(
                   height: 40.0,
                   decoration: BoxDecoration(
@@ -255,38 +268,35 @@ class UserProfilePage extends StatelessWidget {
       );
     }
 
-
     @override
-    // Widget build(BuildContext context) {
-      Size screenSize = MediaQuery
-          .of(context)
-          .size;
-      return Scaffold(
-        body: Stack(
-          children: <Widget>[
-            _buildCoverImage(screenSize),
-            SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: screenSize.height / 6.4),
-                    _buildProfileImage(),
-                    _buildFullName(),
-                    _buildStatus(context),
-                    _buildStatContainer(),
-                    _buildBio(context),
-                    _buildSeparator(screenSize),
-                    SizedBox(height: 10.0),
-                    _buildGetInTouch(context),
-                    SizedBox(height: 8.0),
-                    _buildButtons(),
-                  ],
-                ),
+        // Widget build(BuildContext context) {
+        Size screenSize = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          _buildCoverImage(screenSize),
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: screenSize.height / 6.4),
+                  _buildProfileImage(),
+                  _buildFullName(),
+                  _buildStatus(context),
+                  _buildStatContainer(),
+                  _buildBio(context),
+                  _buildSeparator(screenSize),
+                  SizedBox(height: 10.0),
+                  _buildGetInTouch(context),
+                  SizedBox(height: 8.0),
+                  _buildButtons(),
+                ],
               ),
             ),
-          ],
-        ),
-      );
-    }
+          ),
+        ],
+      ),
+    );
   }
+}
 // }

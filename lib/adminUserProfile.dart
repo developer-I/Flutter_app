@@ -6,13 +6,11 @@ import 'Reports.dart';
 void main() => runApp(adminUserprofile());
 
 class adminUserprofile extends StatelessWidget {
-  var response ;
+  var response;
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-
       title: "User Profile",
       debugShowCheckedModeBanner: false,
       home: adminUserProfilePage(this.response),
@@ -21,14 +19,11 @@ class adminUserprofile extends StatelessWidget {
 }
 
 class adminUserProfilePage extends StatelessWidget {
-  var response1 ;
+  var response1;
   adminUserProfilePage(this.response1);
 
-
-
-
   final String _fullName = "Nick Frost";
-  final String _status = "Software Developer";
+  // final String _status = "Software Developer";
   final String _bio =
       "\"Hi, I am a Freelance developer working for hourly basis. If you wants to contact me to build your product leave a message.\"";
   final String _followers = "173";
@@ -39,8 +34,9 @@ class adminUserProfilePage extends StatelessWidget {
     return Container(
       height: screenSize.height / 2.6,
       decoration: BoxDecoration(
-        image: new  DecorationImage(
-          image: NetworkImage('https://images.pexels.com/photos/1742370/pexels-photo-1742370.jpeg?cs=srgb&dl=pexels-mikechie-esparagoza-1742370.jpg&fm=jpg'),
+        image: new DecorationImage(
+          image: NetworkImage(
+              'https://images.pexels.com/photos/1742370/pexels-photo-1742370.jpeg?cs=srgb&dl=pexels-mikechie-esparagoza-1742370.jpg&fm=jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -48,7 +44,8 @@ class adminUserProfilePage extends StatelessWidget {
   }
 
   Widget _buildProfileImage() {
-    String profile = "http://192.168.0.200/Vipin/AdminUser/profiles/${response1['profile']}";
+    String profile =
+        "http://192.168.0.200/Vipin/AdminUser/profiles/${response1['profile']}";
     return Center(
       child: Container(
         // child: Image.network('http://192.168.0.200/Vipin/AdminUser/profiles/.vipin.jpg')
@@ -57,7 +54,8 @@ class adminUserProfilePage extends StatelessWidget {
         height: 140.0,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage("https://images.pexels.com/photos/3182751/pexels-photo-3182751.jpeg?cs=srgb&dl=pexels-fauxels-3182751.jpg&fm=jpg"),
+            image: NetworkImage(
+                "https://images.pexels.com/photos/3182751/pexels-photo-3182751.jpeg?cs=srgb&dl=pexels-fauxels-3182751.jpg&fm=jpg"),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(80.0),
@@ -66,13 +64,11 @@ class adminUserProfilePage extends StatelessWidget {
             width: 10.0,
           ),
         ),
-
       ),
     );
   }
 
   Widget _buildFullName() {
-
     TextStyle _nameTextStyle = TextStyle(
       fontFamily: 'Roboto',
       color: Colors.black,
@@ -81,8 +77,7 @@ class adminUserProfilePage extends StatelessWidget {
     );
 
     return Text(
-      response1['firstname']+" "+response1['lastname'],
-
+      response1['firstname'] + " " + response1['lastname'],
       style: _nameTextStyle,
     );
   }
@@ -156,7 +151,7 @@ class adminUserProfilePage extends StatelessWidget {
   Widget _buildBio(BuildContext context) {
     TextStyle bioTextStyle = TextStyle(
       fontFamily: 'Spectral',
-      fontWeight: FontWeight.w400,//try changing weight to w500 if not thin
+      fontWeight: FontWeight.w400, //try changing weight to w500 if not thin
       fontStyle: FontStyle.italic,
       color: Color(0xFF799497),
       fontSize: 16.0,
@@ -187,71 +182,71 @@ class adminUserProfilePage extends StatelessWidget {
       color: Theme.of(context).scaffoldBackgroundColor,
       padding: EdgeInsets.only(top: 8.0),
       child: Text(
-        "Get in Touch with ${_fullName.split(" ")[0]},",
+        "Get in Touch with ${response1['firstname']},",
         style: TextStyle(fontFamily: 'Roboto', fontSize: 16.0),
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
-  Widget _buildButtons() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyHomePage()));
-              },
-              child: Container(
-                height: 40.0,
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  color: Color(0xFF404A5C),
-                ),
-                child: Center(
-                  child: Text(
-                    "LOGOUT",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
+    Widget _buildButtons() {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                },
+                child: Container(
+                  height: 40.0,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    color: Color(0xFF404A5C),
                   ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 10.0),
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => reports()));
-              },
-              child: Container(
-                height: 40.0,
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                ),
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
+                  child: Center(
                     child: Text(
-                      "REPORTS",
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                      "LOGOUT",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
+            SizedBox(width: 10.0),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => reports()));
+                },
+                child: Container(
+                  height: 40.0,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Text(
+                        "REPORTS",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
