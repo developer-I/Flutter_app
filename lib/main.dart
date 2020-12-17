@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'signup.dart';
 import 'Userprofile.dart';
 import 'adminUserProfile.dart';
+import 'forgetPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   senddata(var emaili, var passi) async {
+    print("hiii my name is");
     final response = await http.get(
         "http://192.168.0.200/Vipin/AdminUser/index.php/Connector/App_insert_login_data?email=$emaili&pass=$passi");
 
@@ -72,7 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
       responseJson = jsonDecode(response.body.toString());
     });
 
-    // print(responseJson['email']+" " + responseJson['pass']);
+     print(responseJson['email']+" " + responseJson['pass']);
+     print("abcd" + responseJson['status']);
 
     if (responseJson['status'] == 'true') {
       if (responseJson['designation'] == 'admin') {
@@ -172,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(
                             fontSize: 80.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.green)),
+                            color: Color(0XFFF92B7F))),
                   )
                 ],
               ),
@@ -190,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green))),
+                              borderSide: BorderSide(color: Color(0XFFF92B7F)))),
                     ),
                     SizedBox(height: 20.0),
                     TextField(
@@ -202,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green))),
+                              borderSide: BorderSide(color: Color(0XFFF92B7F)))),
                       obscureText: true,
                     ),
                     SizedBox(height: 5.0),
@@ -210,10 +213,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       alignment: Alignment(1.0, 0.0),
                       padding: EdgeInsets.only(top: 15.0, left: 20.0),
                       child: InkWell(
+                        onTap: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ResetPassword()),
+                          );
+                        },
                         child: Text(
                           'Forgot Password',
                           style: TextStyle(
-                              color: Colors.green,
+                              color: Color(0XFFF92B7F),
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Montserrat',
                               decoration: TextDecoration.underline),
@@ -222,25 +231,62 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SizedBox(height: 40.0),
                     Container(
-                        height: 40.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.greenAccent,
-                          color: Colors.green,
-                          elevation: 7.0,
-                          child: RaisedButton(
-                            onPressed: () {
+                        // height: 40.0,
+                        // child: Material(
+                        //   borderRadius: BorderRadius.circular(20.0),
+                        //   shadowColor: Colors.greenAccent,
+                        //   color: Colors.green,
+                        //   elevation: 7.0,
+                        //   child: RaisedButton(
+                        //     onPressed: () {
+                        //
+                        //
+                        //       //   final response = await http.post("http://192.168.0.200/Vipin/AdminUser/index.php/Connector/App_insert_data?");
+                        //       senddata(_emaill.text, _passl.text);
+                        //     },
+                        //     color: Colors.green,
+                        //     textColor: Colors.white,
+                        //     padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        //     child: Text('Click Here Login'),
+                        //   ),
+                        // )
+                      //========================================================================================
 
 
-                              //   final response = await http.post("http://192.168.0.200/Vipin/AdminUser/index.php/Connector/App_insert_data?");
-                              senddata(_emaill.text, _passl.text);
-                            },
-                            color: Colors.green,
-                            textColor: Colors.white,
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                            child: Text('Click Here To Register User Online'),
+                      height: 60,
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0.3, 1],
+                          colors: [
+                            Color(0xFFF58524),
+                            Color(0XFFF92B7F),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                      ),
+                      child: SizedBox.expand(
+                        child: FlatButton(
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                        )),
+                          onPressed: () {
+                            print('heloooo');
+                            senddata(_emaill.text, _passl.text);
+                          },
+                        ),
+                      ),
+                    ),
                     // Container(
                     //   height: 40.0,
                     //   child: Material(
@@ -316,7 +362,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text(
                     'Register',
                     style: TextStyle(
-                        color: Colors.green,
+                        color: Color(0XFFF92B7F),
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.bold,
                         decoration: TextDecoration.underline),

@@ -42,7 +42,7 @@ class _logoutState extends State<logout> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MyHomePage()),
+      MaterialPageRoute(builder: (context) => MyApp()),
     );
 
 

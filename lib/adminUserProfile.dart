@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'main.dart';
 import 'Reports.dart';
+import 'logout.dart';
 
 void main() => runApp(adminUserprofile());
 
@@ -32,6 +33,7 @@ class adminUserProfilePage extends StatelessWidget {
 
   Widget _buildCoverImage(Size screenSize) {
     return Container(
+
       height: screenSize.height / 2.6,
       decoration: BoxDecoration(
         image: new DecorationImage(
@@ -199,7 +201,7 @@ class adminUserProfilePage extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                      MaterialPageRoute(builder: (context) => logout()));
                 },
                 child: Container(
                   height: 40.0,
@@ -258,7 +260,9 @@ class adminUserProfilePage extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   SizedBox(height: screenSize.height / 6.4),
+
                   _buildProfileImage(),
+
                   _buildFullName(),
                   _buildStatus(context),
                   _buildStatContainer(),

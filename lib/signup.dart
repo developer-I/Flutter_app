@@ -1,9 +1,12 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'main.dart';
-import 'Userprofile.dart';
+import 'package:flutter/services.dart';
+import 'package:gender_picker/source/enums.dart';
+import 'package:gender_picker/source/gender_picker.dart';
+
+
 
 class SignupPage extends StatefulWidget {
   @override
@@ -14,19 +17,23 @@ class _SignupPageState extends State<SignupPage> {
   // Boolean variable for CircularProgressIndicator.
   bool visible = false;
 
-  TextEditingController _email = new TextEditingController();
-  TextEditingController _pass = new TextEditingController();
-  TextEditingController _cpass = new TextEditingController();
-  TextEditingController _fname = new TextEditingController();
-  TextEditingController _lname = new TextEditingController();
-  TextEditingController _gender = new TextEditingController();
-  TextEditingController _mobile = new TextEditingController();
+
+
+
+
+  final _formKey = GlobalKey<FormState>();
+  User user = new User();
+  final _passwordFieldKey = GlobalKey<FormFieldState<String>>();
 
   senddata(var emaili, var passi, var fnamei, var lnamei, var genderi,
       var mobilei) async {
     setState(() {
+
       visible = true;
+
     });
+
+
 
     final response = await http.get(
         "http://192.168.0.200/Vipin/AdminUser/index.php/Connector/App_insert_data?email=$emaili&pass=$passi&fname=$fnamei&lname=$lnamei&gender=$genderi&mobile=$mobilei");
@@ -76,21 +83,21 @@ class _SignupPageState extends State<SignupPage> {
                   child: Stack(
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+                        padding: EdgeInsets.fromLTRB(10.0, 50.0, 0.0, 0.0),
                         child: Text(
-                          'Signup',
+                          'Signup'.toUpperCase(),
                           style: TextStyle(
                               fontSize: 80.0, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(260.0, 125.0, 0.0, 0.0),
+                        padding: EdgeInsets.fromLTRB(260.0, 65.0, 0.0, 0.0),
                         child: Text(
                           '.',
                           style: TextStyle(
                               fontSize: 80.0,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green),
+                              color: Color(0XFFF92B7F)),
                         ),
                       )
                     ],
@@ -98,152 +105,300 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 Container(
                     padding:
-                        EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-                    child: Column(
-                      children: <Widget>[
-                        TextField(
-                          controller: _email,
-                          decoration: InputDecoration(
-                              labelText: 'EMAIL',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              // hintText: 'EMAIL',
-                              // hintStyle: ,
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green))),
-                        ),
-                        SizedBox(height: 10.0),
-                        TextField(
-                          controller: _pass,
-                          decoration: InputDecoration(
-                              labelText: 'PASSWORD ',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green))),
-                          obscureText: true,
-                        ),
-                        SizedBox(height: 10.0),
-                        TextField(
-                          controller: _cpass,
-                          decoration: InputDecoration(
-                              labelText: 'CONFIRM PASSWORD',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green))),
-                          obscureText: true,
-                        ),
-                        SizedBox(height: 10.0),
-                        TextField(
-                          controller: _fname,
-                          decoration: InputDecoration(
-                              labelText: 'FIRST NAME',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green))),
-                          obscureText: false,
-                        ),
-                        SizedBox(height: 10.0),
-                        TextField(
-                          controller: _lname,
-                          decoration: InputDecoration(
-                              labelText: 'LAST NAME',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green))),
-                          obscureText: false,
-                        ),
-                        SizedBox(height: 10.0),
-                        TextField(
-                          controller: _gender,
-                          decoration: InputDecoration(
-                              labelText: 'GENDER',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green))),
-                          obscureText: false,
-                        ),
-                        SizedBox(height: 10.0),
-                        TextField(
-                          controller: _mobile,
-                          decoration: InputDecoration(
-                              labelText: 'MOBILE',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green))),
-                          obscureText: false,
-                        ),
-                        SizedBox(height: 50.0),
-                        Container(
-                            height: 40.0,
-                            child: Material(
-                              borderRadius: BorderRadius.circular(20.0),
-                              shadowColor: Colors.greenAccent,
-                              color: Colors.green,
-                              elevation: 7.0,
-                              child: RaisedButton(
-                                onPressed: () {
-                                  //   final response = await http.post("http://192.168.0.200/Vipin/AdminUser/index.php/Connector/App_insert_data?");
-                                  senddata(_email.text, _pass.text, _fname.text,
-                                      _lname.text, _gender.text, _mobile.text);
+                        EdgeInsets.only(top: 5.0, left: 20.0, right: 20.0),
+                    child: Form(
+                      key: _formKey,
+                      autovalidate: false,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            // controller: _email,
+
+                            decoration: InputDecoration(
+                                labelText: 'EMAIL',
+                                labelStyle: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                                // hintText: 'EMAIL',
+                                // hintStyle: ,
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Color(0XFFF92B7F)))),
+                            validator: (value) {
+                              if (!emailRegex.hasMatch(value)) {
+                                return 'Please enter valid email';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              user._email = value;
+                            },
+                          ),
+                          SizedBox(height: 10.0),
+                          TextFormField(
+                            // controller: _pass,
+                            key: _passwordFieldKey,
+                            decoration: InputDecoration(
+                                labelText: 'PASSWORD ',
+                                labelStyle: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Color(0XFFF92B7F)))),
+                            obscureText: true,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Please enter password';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 10.0),
+                          TextFormField(
+                            // controller: _cpass,
+                            decoration: InputDecoration(
+                                labelText: 'CONFIRM PASSWORD',
+                                labelStyle: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Color(0XFFF92B7F)))),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Password is required';
+                              }
+                              if (value != _passwordFieldKey.currentState.value) {
+                                return 'Password do not match';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              user._cpass = value;
+                            },
+                            obscureText: true,
+                          ),
+                          SizedBox(height: 10.0),
+                          TextFormField(
+                            // controller: _fname,
+                            decoration: InputDecoration(
+                                labelText: 'FIRST NAME',
+
+                                labelStyle: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Color(0XFFF92B7F)))),
+                            obscureText: false,
+
+                            inputFormatters: [new LengthLimitingTextInputFormatter(10)],
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Please enter name';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              user._fname = value;
+                            },
+
+
+                          ),
+                          SizedBox(height: 10.0),
+                          TextFormField(
+                            // controller: _lname,
+                            decoration: InputDecoration(
+                                labelText: 'LAST NAME',
+                                labelStyle: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Color(0XFFF92B7F)))),
+                            obscureText: false,
+
+                            inputFormatters: [new LengthLimitingTextInputFormatter(10)],
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Please enter name';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              user._lname = value;
+                            },
+                          ),
+
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      // controller: _mobile,
+                      decoration: InputDecoration(
+                          labelText: 'MOBILE',
+                          labelStyle: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Color(0XFFF92B7F)))),
+                      obscureText: false,
+                      inputFormatters: [
+                        new WhitelistingTextInputFormatter(
+                            new RegExp(r'^[0-9]*$')),
+                        new LengthLimitingTextInputFormatter(10)
+                      ],
+                      validator: (value) {
+                        if (!phoneRegex.hasMatch(value)) {
+                          return 'Please enter valid phone number';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        user._mobile = value;
+                      },
+                    ),
+                          SizedBox(height: 20.0),
+                          // TextField(
+
+
+                              GenderPickerWithImage(
+                                showOtherGender: true,
+                                verticalAlignedText: false,
+                                selectedGender: Gender.Male,
+                                selectedGenderTextStyle: TextStyle(
+                                    color: Color(0xFF8b32a8), fontWeight: FontWeight.bold),
+                                unSelectedGenderTextStyle: TextStyle(
+                                    color: Colors.white, fontWeight: FontWeight.normal),
+                                onChanged: (Gender gender) {
+                                  print(gender);
+                                  user._gender = gender;
                                 },
-                                color: Colors.green,
-                                textColor: Colors.white,
-                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child:
-                                    Text('Click Here To Register User Online'),
+                                equallyAligned: true,
+                                animationDuration: Duration(milliseconds: 300),
+                                isCircular: true,
+                                // default : true,
+                                opacityOfGradient: 0.4,
+                                padding: const EdgeInsets.all(3),
+                                size: 50, //default : 40
                               ),
-                            )),
-                        Visibility(
-                            visible: visible,
+                            // controller: _gender,
+                            // decoration: InputDecoration(
+                            //     labelText: 'GENDER',
+                            //     labelStyle: TextStyle(
+                            //         fontFamily: 'Montserrat',
+                            //         fontWeight: FontWeight.bold,
+                            //         color: Colors.grey),
+                            //     focusedBorder: UnderlineInputBorder(
+                            //         borderSide: BorderSide(color: Colors.green))),
+                            // obscureText: false,
+                          // ),
+
+                          SizedBox(height: 30.0),
+                          Container(
+                              // height: 40.0,
+                              // child: Material(
+                              //   borderRadius: BorderRadius.circular(20.0),
+                              //   shadowColor: Colors.greenAccent,
+                              //   color: Colors.green,
+                              //   elevation: 7.0,
+                              //   child: RaisedButton(
+                              //     onPressed: () {
+                              //         if (_formKey.currentState.validate()) {
+                              //
+                              //           _formKey.currentState.save();
+                              //
+                              //         } else {
+                              //           print('Error');
+                              //
+                              //       }
+                              //       //   final response = await http.post("http://192.168.0.200/Vipin/AdminUser/index.php/Connector/App_insert_data?");
+                              //       // senddata(_email.text, _pass.text, _fname,
+                              //       //     _lname.text, _gender.text, _mobile.text);
+                              //     },
+                              //     color: Colors.green,
+                              //     textColor: Colors.white,
+                              //     padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              //     child:
+                              //         Text('Click Here To Register User Online'),
+                              //   ),
+                              // )
+                            //============================================================================================
+
+                            height: 50.0,
+                            color: Colors.transparent,
                             child: Container(
-                                margin: EdgeInsets.only(bottom: 30),
-                                child: CircularProgressIndicator())),
-                        SizedBox(height: 20.0),
-                        Container(
-                          height: 40.0,
-                          color: Colors.transparent,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.black,
-                                    style: BorderStyle.solid,
-                                    width: 1.0),
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(20.0)),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Center(
-                                child: Text('Go Back',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat')),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.black,
+                                      style: BorderStyle.solid,
+                                      width: 0.0),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    stops: [0.3, 1],
+                                    colors: [
+                                      Color(0xFFF58524),
+                                      Color(0XFFF92B7F),
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: InkWell(
+                                onTap: () {
+                                       if (_formKey.currentState.validate()) {
+                                         print("Process data");
+                                        _formKey.currentState.save();
+
+
+                                         senddata(user._email, user._cpass, user._fname,
+                                             user._lname,user._gender , user._mobile);
+                                       } else {
+                                             print('Error');
+                                         }
+                                },
+                                child: Center(
+                                  child: Text('Register'.toUpperCase(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Montserrat')),
+                                ),
+                              ),
+                            ),
+
+
+                            ),
+                          Visibility(
+                              visible: visible,
+                              child: Container(
+                                  margin: EdgeInsets.only(bottom: 30),
+                                  child: CircularProgressIndicator())),
+                          SizedBox(height: 20.0),
+                          Container(
+                            height: 50.0,
+                            color: Colors.transparent,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.black,
+                                      style: BorderStyle.solid,
+                                      width: 1.0),
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Center(
+                                  child: Text('Go Back',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Montserrat')),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )),
                 // SizedBox(height: 15.0),
                 // Row(
@@ -273,4 +428,19 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
+  final RegExp phoneRegex = new RegExp(r'^[6-9]\d{9}$');
+  final RegExp emailRegex = new RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+
+}
+
+
+class User {
+  String _email ;
+  String _pass ;
+  String _cpass ;
+  String _fname ;
+  String _lname ;
+  var _gender ;
+  String _mobile ;
 }

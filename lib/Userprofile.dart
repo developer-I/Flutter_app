@@ -40,6 +40,7 @@ class UserProfilePage extends StatelessWidget {
 
   Widget _buildCoverImage(Size screenSize) {
     return Container(
+        padding: EdgeInsets.fromLTRB(0, 60, 0, 0),
       height: screenSize.height / 2.6,
       decoration: BoxDecoration(
         image: new DecorationImage(
@@ -286,7 +287,7 @@ class UserProfilePage extends StatelessWidget {
                   _buildStatContainer(),
                   _buildBio(context),
                   _buildSeparator(screenSize),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 16.0),
                   _buildGetInTouch(context),
                   SizedBox(height: 8.0),
                   _buildButtons(),

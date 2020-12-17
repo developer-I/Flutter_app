@@ -32,12 +32,12 @@ class _Attendance extends State<Attendance> {
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     GallerySaver.saveImage(image.path);
-    print(image.path);
-    // _uploadFile(image);
-    //
-    // setState(() {
-    //   _image = image;
-    // });
+    // print(image.path);
+    _uploadFile(image);
+
+    setState(() {
+      _image = image;
+    });
   }
 
   void _incrementCounter() {

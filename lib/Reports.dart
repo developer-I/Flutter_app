@@ -235,7 +235,7 @@ class _employeeReports extends State<employeeReports> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 5.0,
+                                        height: MediaQuery.of(context).size.height*0.0,
                                       ),
                                       Text(
                                         "5200",
@@ -259,7 +259,7 @@ class _employeeReports extends State<employeeReports> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 5.0,
+                                        height: MediaQuery.of(context).size.height*0.0,
                                       ),
                                       Text(
                                         "28.5K",
@@ -332,7 +332,7 @@ class _employeeReports extends State<employeeReports> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 5.0,
+                                        height: MediaQuery.of(context).size.height*0.0,
                                       ),
                                       Text(
                                         "5200",
@@ -356,7 +356,7 @@ class _employeeReports extends State<employeeReports> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 5.0,
+                                        height: MediaQuery.of(context).size.height*0.0,
                                       ),
                                       Text(
                                         "28.5K",
