@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 
-import 'main.dart';
+import 'RHandle.dart';
 import 'Reports.dart';
 import 'logout.dart';
 
@@ -33,8 +37,8 @@ class adminUserProfilePage extends StatelessWidget {
 
   Widget _buildCoverImage(Size screenSize) {
     return Container(
-
-      height: screenSize.height / 2.6,
+      padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
+      height: screenSize.height / 2.8,
       decoration: BoxDecoration(
         image: new DecorationImage(
           image: NetworkImage(
@@ -47,7 +51,7 @@ class adminUserProfilePage extends StatelessWidget {
 
   Widget _buildProfileImage() {
     String profile =
-        "http://192.168.0.200/Vipin/AdminUser/profiles/${response1['profile']}";
+        "https://images.pexels.com/photos/3182751/pexels-photo-3182751.jpeg?cs=srgb&dl=pexels-fauxels-3182751.jpg&fm=jpg";
     return Center(
       child: Container(
         // child: Image.network('http://192.168.0.200/Vipin/AdminUser/profiles/.vipin.jpg')
@@ -56,13 +60,12 @@ class adminUserProfilePage extends StatelessWidget {
         height: 140.0,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(
-                "https://images.pexels.com/photos/3182751/pexels-photo-3182751.jpeg?cs=srgb&dl=pexels-fauxels-3182751.jpg&fm=jpg"),
+            image: NetworkImage(profile),
             fit: BoxFit.cover,
           ),
-          borderRadius: BorderRadius.circular(80.0),
+          borderRadius: BorderRadius.circular(40.0),
           border: Border.all(
-            color: Colors.white,
+            color: Color(0XFFF92B7F),
             width: 10.0,
           ),
         ),
@@ -92,7 +95,7 @@ class adminUserProfilePage extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Text(
-        response1['designation'],
+        StringUtils.capitalize(response1['designation']),
         style: TextStyle(
           fontFamily: 'Spectral',
           color: Colors.black,
@@ -197,41 +200,70 @@ class adminUserProfilePage extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         child: Row(
           children: <Widget>[
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => logout()));
-                },
-                child: Container(
-                  height: 40.0,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    color: Color(0xFF404A5C),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "LOGOUT",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: InkWell(
+            //     onTap: () {
+            //
+            //       // Navigator.push(
+            //       //     context,
+            //       //     MaterialPageRoute(
+            //       //         builder: (context) => Rhandle(responseJson)));
+            //
+            //     },
+            //     child: Container(
+            //       height: 40.0,
+            //       decoration: BoxDecoration(
+            //         gradient: LinearGradient(
+            //           begin: Alignment.topLeft,
+            //           end: Alignment.bottomRight,
+            //           stops: [0.5, 0.5],
+            //           colors: [
+            //             Color(0xFFF58524),
+            //             Color(0XFFF92B7F),
+            //           ],
+            //         ),
+            //         borderRadius: BorderRadius.all(
+            //           Radius.circular(5),
+            //         ),
+            //       ),
+            //       child: Center(
+            //         child: Text(
+            //           "USER LOGS",
+            //           style: TextStyle(
+            //             color: Colors.black,
+            //             fontWeight: FontWeight.w600,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(width: 10.0),
             Expanded(
               child: InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => reports()));
+                onTap: () async {
+                  // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                  //     Rhandle()), (Route<dynamic> route) => false);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => employeeReports()));
                 },
                 child: Container(
                   height: 40.0,
                   decoration: BoxDecoration(
-                    border: Border.all(),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: [0.5, 0.5],
+                      colors: [
+                        Color(0xFFF58524),
+                        Color(0XFFF92B7F),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
                   ),
                   child: Center(
                     child: Padding(
@@ -249,9 +281,26 @@ class adminUserProfilePage extends StatelessWidget {
         ),
       );
     }
-
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0XFFF92B7F),
+        title: Text(" Profile "),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            tooltip: "Logout",
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => logout()));
+            },
+          )
+
+
+        ],
+      ),
       body: Stack(
         children: <Widget>[
           _buildCoverImage(screenSize),
@@ -259,10 +308,10 @@ class adminUserProfilePage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: screenSize.height / 6.4),
-
+                  SizedBox(height: screenSize.height / 5.0),
+                  Padding(padding: EdgeInsets.only(top: 45.0)),
                   _buildProfileImage(),
-
+                  Padding(padding: EdgeInsets.only(top: 11.0)),
                   _buildFullName(),
                   _buildStatus(context),
                   _buildStatContainer(),
@@ -281,3 +330,20 @@ class adminUserProfilePage extends StatelessWidget {
     );
   }
 }
+
+
+/*
+* logout
+*  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => logout()));
+                      *
+                      *
+                      *
+                      *
+                      *
+                      *
+                      * reports
+ Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => reports()));
+*
+* */

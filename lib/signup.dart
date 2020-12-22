@@ -57,7 +57,7 @@ class _SignupPageState extends State<SignupPage> {
                 child: new Text("OK"),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                      MaterialPageRoute(builder: (context) => MyApp()));
                 },
               ),
             ],

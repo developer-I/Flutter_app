@@ -1,8 +1,5 @@
 
-
 import 'dart:convert';
-
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
 
@@ -26,16 +23,11 @@ var email;
 
     });
 
-    print(responseJson['msg']);
-
-    print(responseJson['email']);
-
-
+     print(responseJson['error']);
+    // print(responseJson['key']);
+    // print(responseJson['currenttime']);
 
 
-
-
-    // print(email);
   }
 
 

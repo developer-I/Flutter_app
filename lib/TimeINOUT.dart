@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'Attendance.dart';
+import 'logout.dart';
 
 class TimeInOut extends StatefulWidget {
   var status;
@@ -24,10 +25,14 @@ class _TimeInOutState extends State<TimeInOut> {
     return Scaffold(
       // backgroundColor: Colors.lightGreen,
       appBar: AppBar(
-        backgroundColor: Colors.lightGreen,
-        title: Text("Attendance"),
+        backgroundColor: Color(0XFFF92B7F),
+        title: Text(" Attendance "),
+        centerTitle: true,
         actions: <Widget>[
-          new IconButton(icon: const Icon(Icons.list), onPressed: null)
+          new IconButton(icon: const Icon(Icons.logout), onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => logout()));
+          })
         ],
       ),
 
@@ -41,14 +46,15 @@ class _TimeInOutState extends State<TimeInOut> {
             //   fit: BoxFit.fill,
             // ),
             border: Border.all(
-              color: Colors.green,
+              color: Color(0xFFF58524),
+
               width: 6,
             ),
             borderRadius: BorderRadius.circular(20.0),
           ),
           // color: Colors.amber,
 
-          margin: EdgeInsets.symmetric(horizontal: 80, vertical: 60),
+          margin: EdgeInsets.symmetric(horizontal: 105, vertical: 90),
 
           child: Column(
             children: [
@@ -64,7 +70,7 @@ class _TimeInOutState extends State<TimeInOut> {
                     ),
                     borderRadius: BorderRadius.circular(80.0),
                     border: Border.all(
-                      color: Colors.green,
+                      color: Color(0XFFF92B7F),
                       width: 3.0,
                     ),
                   ),
@@ -77,16 +83,18 @@ class _TimeInOutState extends State<TimeInOut> {
                 minWidth: 140,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
-                    side: BorderSide(color: Colors.green)),
+                    side: BorderSide(color: Color(0XFFF92B7F))),
                 color: Colors.white,
-                textColor: Colors.red,
+                textColor: Color(0xFFF58524),
                 padding: EdgeInsets.all(9.0),
                 onPressed: () {
                   if (status == 'time in' || status == 'time out') {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Attendance(email)));
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                        Attendance(email)), (Route<dynamic> route) => false);
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => Attendance(email)));
                   }
                 },
                 child: Text(

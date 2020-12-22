@@ -1,10 +1,9 @@
 import 'dart:convert';
-
+import 'package:basic_utils/basic_utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:demonstration/Attendance.dart';
 import 'package:flutter/material.dart';
 import 'TimeINOUT.dart';
-
 import 'logout.dart';
 
 
@@ -40,8 +39,8 @@ class UserProfilePage extends StatelessWidget {
 
   Widget _buildCoverImage(Size screenSize) {
     return Container(
-        padding: EdgeInsets.fromLTRB(0, 60, 0, 0),
-      height: screenSize.height / 2.6,
+        padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
+      height: screenSize.height / 2.8,
       decoration: BoxDecoration(
         image: new DecorationImage(
           image: NetworkImage(
@@ -66,9 +65,9 @@ class UserProfilePage extends StatelessWidget {
             image: NetworkImage(profile),
             fit: BoxFit.cover,
           ),
-          borderRadius: BorderRadius.circular(80.0),
+          borderRadius: BorderRadius.circular(40.0),
           border: Border.all(
-            color: Colors.white,
+            color: Color(0XFFF92B7F),
             width: 10.0,
           ),
         ),
@@ -98,7 +97,7 @@ class UserProfilePage extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Text(
-        response1['designation'],
+        StringUtils.capitalize(response1['designation']),
         style: TextStyle(
           fontFamily: 'Spectral',
           color: Colors.black,
@@ -190,7 +189,7 @@ class UserProfilePage extends StatelessWidget {
       color: Theme.of(context).scaffoldBackgroundColor,
       padding: EdgeInsets.only(top: 8.0),
       child: Text(
-        "Get in Touch with ${_fullName.split(" ")[0]},",
+        "Get in Touch with ${response1['firstname']},",
         style: TextStyle(fontFamily: 'Roboto', fontSize: 16.0),
       ),
     );
@@ -207,19 +206,29 @@ class UserProfilePage extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => logout()));
+                      MaterialPageRoute( ));
                 },
                 child: Container(
                   height: 40.0,
                   decoration: BoxDecoration(
-                    border: Border.all(),
-                    color: Color(0xFF404A5C),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: [0.5, 0.5],
+                      colors: [
+                        Color(0xFFF58524),
+                        Color(0XFFF92B7F),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
                   ),
                   child: Center(
                     child: Text(
-                      "LOGOUT",
+                      "LOGS",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -250,7 +259,18 @@ class UserProfilePage extends StatelessWidget {
                 child: Container(
                   height: 40.0,
                   decoration: BoxDecoration(
-                    border: Border.all(),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: [0.5, 0.5],
+                      colors: [
+                        Color(0xFFF58524),
+                        Color(0XFFF92B7F),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
                   ),
                   child: Center(
                     child: Padding(
@@ -273,6 +293,18 @@ class UserProfilePage extends StatelessWidget {
         // Widget build(BuildContext context) {
         Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.logout, color: Colors.black ),  tooltip: "Logout",
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => logout()));
+          },
+        ),
+        backgroundColor: Color(0XFFF92B7F),
+        title: Text(" Profile "),
+        centerTitle: true,
+      ),
       body: Stack(
         children: <Widget>[
           _buildCoverImage(screenSize),
@@ -280,8 +312,10 @@ class UserProfilePage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: screenSize.height / 6.4),
+                  SizedBox(height: screenSize.height / 5.0),
+                  Padding(padding: EdgeInsets.only(top: 45.0)),
                   _buildProfileImage(),
+                  Padding(padding: EdgeInsets.only(top: 11.0)),
                   _buildFullName(),
                   _buildStatus(context),
                   _buildStatContainer(),

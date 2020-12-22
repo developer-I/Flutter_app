@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'TimeINOUT.dart';
 
@@ -19,7 +20,7 @@ class Attendance extends StatefulWidget {
 }
 
 class _Attendance extends State<Attendance> {
-  int _counter = 0;
+  // int _counter = 0;
   var email;
   File _image;
   var uid;
@@ -40,11 +41,11 @@ class _Attendance extends State<Attendance> {
     });
   }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  // void _incrementCounter() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
 
   // Methode for file upload
   void _uploadFile(filePath) async {
@@ -93,22 +94,57 @@ class _Attendance extends State<Attendance> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text("Attendance "),
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     // Here we take the value from the MyHomePage object that was created by
+    //     // the App.build method, and use it to set our appbar title.
+    //     backgroundColor: Color(0XFFF92B7F),
+    //     title: Text("Attendance"),
+    //     centerTitle: true,
+    //   ),
+    //   body: Center(
+    //     // Center is a layout widget. It takes a single child and positions it
+    //     // in the middle of the parent.
+    //     child: _image == null ? Text('No image selected.') : Image.file(_image),
+    //   ),
+    //   floatingActionButton: FloatingActionButton(
+    //     onPressed: getImage,
+    //     tooltip: 'Increment',
+    //     child: Icon(Icons.add),
+    //   ), // This trailing comma makes auto-formatting nicer for build methods.
+    // );
+
+
+    return MaterialApp(
+      home: Scaffold(
+        body: Container(
+            child: Center(
+              child: Stack(
+                children: [
+                  new Container(
+
+                    padding: EdgeInsets.all(15.0),
+                    child: new LinearPercentIndicator(
+                      width: MediaQuery.of(context).size.width - 50,
+                      animation: true,
+                      lineHeight: 20.0,
+                      animationDuration: 2000,
+                      percent: 0.9,
+                      center: Text("90.0%"),
+
+                      linearStrokeCap: LinearStrokeCap.roundAll,
+                      progressColor: Color(0XFFF92B7F),
+
+                    ),
+
+                  ),
+
+                ],
+              ),
+            )
+        ),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: _image == null ? Text('No image selected.') : Image.file(_image),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: getImage,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+
   }
 }
