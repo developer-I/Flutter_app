@@ -454,10 +454,16 @@ _employeeReports() {
                                          textAlign: TextAlign.center,
                                        ),
                                        onPressed: () {
+
+                                         print(responseJson[index]['email']);
+                                         print(responseJson[index]['firstname']);
+                                         // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                                         //     UserLogs(responseJson[index]['email'],responseJson[index]['firstname'])), (Route<dynamic> route) => false);
+
                                          Navigator.push(
                                              context,
                                              MaterialPageRoute(
-                                                 builder: (context) => UserLogs(responseJson[index]['email'])));
+                                                 builder: (context) => UserLogs(responseJson[index]['email'],responseJson[index]['firstname'])));
 
                                        },
                                      ),

@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'TimeINOUT.dart';
 import 'logout.dart';
+import 'Userlogs.dart';
 
 
 void main() => runApp(Userprofile());
@@ -205,8 +206,10 @@ class UserProfilePage extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute( ));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserLogs(response1['email'],response1['firstname'])));
                 },
                 child: Container(
                   height: 40.0,
